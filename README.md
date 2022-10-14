@@ -25,4 +25,5 @@ NAI requires some parameters, and to input them you can edit parameters.json fil
 
 # Tested version
 naicli> node -v
+
 v14.17.3
