@@ -3,14 +3,19 @@ naicli is a NovelAI CLI to make image generation more convinient.
 
 # How to use
 Workspace> git clone https://github.com/bbtwq/naicli.git
+
 Workspace> cd naicli
-naicli> ls
-<!-- Package install -->
+
+#### \# Package install
+
 naicli> npm install
-<!-- Set NAI account information to the environment variables (NAI_EMAIL, NAI_PASSWORD) -->
-<!-- The commands below are  -->
+
+#### \# Set NAI account information to the environment variables (NAI_EMAIL, NAI_PASSWORD). The commands below are for Windows OS.
+
 naicli> $env:NAI_EMAIL = "YOUR_EMAIL_ADDRESS"
+
 naicli> $env:NAI_PASSWORD = "YOUR_SECRET_PASSWORD"
+
 naicli> node .\naicli.js
 
 You can find the output images in output/image-***.png
