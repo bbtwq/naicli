@@ -39,7 +39,7 @@ let param = {
       "n_samples": p.n_samples? p.n_samples : 1,
       "ucPreset": 0,
       "qualityToggle": p.qualityToggle? p.qualityToggle : true,
-      "uc": "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry"
+      "uc": p.uc? p.uc : "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry"
     }
 }
 
