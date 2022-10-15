@@ -6,7 +6,7 @@ import editPrompts from "./prompts-editor.js"
 
 // First arg is Integer
 let editPromptsMode = false
-if (process.argv.length >=3 && Number.isInteger(process.argv[2]) && process.argv[2] >= 1){
+if (process.argv.length >=3 && Number.isInteger(Number(process.argv[2])) && process.argv[2] >= 1){
   editPromptsMode = true;
 }
 
@@ -44,7 +44,7 @@ let param = {
 }
 
 if (editPromptsMode) {
-  param.input =  editPrompts(param.input, process.argv[2])
+  param.input =  editPrompts(param.input, Number(process.argv[2]))
 }
 // Get a key for an access token
 async function calcAccessKey(email, password) {
