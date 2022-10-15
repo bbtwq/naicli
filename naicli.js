@@ -46,6 +46,7 @@ let param = {
 if (editPromptsMode) {
   param.input =  editPrompts(param.input, Number(process.argv[2]))
 }
+
 // Get a key for an access token
 async function calcAccessKey(email, password) {
     await sodium.ready;
@@ -74,6 +75,7 @@ let result = await axios.post('https://api.novelai.net/user/login', {
   .catch(function (error) {
     console.log("Login failed.")
     console.log(error);
+    process.exit(1); //test
   });
 
 // Post request to NAI to generate images
