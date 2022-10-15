@@ -31,7 +31,7 @@ naicli> node -v
 
 v14.17.3
 
-# Prompts Edit Mode
+# Prompts Edit Mode (beta)
 Prompts Edit Mode can automatically change the prompts in parameter.json randomly. It may be useful to check the relation between the prompts and the output images when running image generation repeatedly. The generated images' name and the prompts are written in /outputs/prompts.log.
 
 At this point, Prompts Edit Mode can simply reduce the randomly selected prompts by the number you enter as an argument.
