@@ -1,7 +1,14 @@
 import axios from "axios";
-import sodium from 'libsodium-wrappers';
-import { writeFileSync, existsSync,mkdirSync  } from 'fs';
-import { readFile } from 'fs/promises';
+import sodium from "libsodium-wrappers";
+import { writeFileSync, existsSync, mkdirSync, appendFileSync} from "fs";
+import { readFile } from "fs/promises";
+import editPrompts from "./prompts-editor.js"
+
+// First arg is Integer
+let editPromptsMode = false
+if (process.argv.length >=3 && Number.isInteger(process.argv[2]) && process.argv[2] >= 1){
+  editPromptsMode = true;
+}
 
 // Read parameters.json
 const p = JSON.parse(
@@ -36,6 +43,9 @@ let param = {
     }
 }
 
+if (editPromptsMode) {
+  param.input =  editPrompts(param.input, process.argv[2])
+}
 // Get a key for an access token
 async function calcAccessKey(email, password) {
     await sodium.ready;
@@ -76,17 +86,20 @@ const imageResult = await axios.post('https://api.novelai.net/ai/generate-image'
     }
   })
   .then(function (response) {
-    console.log("Image gen succeeded.")
     return response;
   })
-  .catch(function (error) {
-    console.log("Image gen failed.")
-    console.log(error);
+  .catch(function (e) {
+    console.log("Image gen failed. Error code : ", e.code)
   });
 
 // Create a directry to store images
 if (!existsSync("outputs")) {
     mkdirSync("outputs");
+}
+
+if (imageResult.data  === "") {
+  console.log("NAI returned no image, maybe their servers' issue.")
+  process.exit(1);
 }
 
 // imageResult.data is string, and includes multiple DataURLs so convert them to png  
@@ -95,11 +108,14 @@ try {
     let buffer;
     for( const imageURI of imageResult.data.matchAll(/(?<=data:)(.*)/g)){
         buffer = Buffer.from(imageURI.toString(), 'base64');
-        writeFileSync(`./outputs/image-s${param.parameters.seed}-${i}.png` ,buffer);
+        let imageName = `./outputs/image-s${param.parameters.seed}-${i}.png`
+        writeFileSync(imageName, buffer);
+        appendFileSync("./outputs/prompts.log", `${imageName}, ${param.input}\n`)
         i++;
     }
+    console.log("Image gen succeeded.")
 } catch(e) {
-    console.error(e);
+    console.log("Failed to save image.")
 }
 
 
